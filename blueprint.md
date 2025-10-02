@@ -1,44 +1,37 @@
-# Proyecto E-commerce con React, Vite y Firebase
 
-## Visión General
+# Project Blueprint
 
-Este documento describe la arquitectura y el plan de implementación para una aplicación de comercio electrónico completa (Single-Page Application). La aplicación será responsiva, multilingüe y contará con una experiencia de usuario fluida, desde la exploración de productos hasta la gestión del carrito y la autenticación de usuarios.
+## Overview
 
-## Stack Tecnológico y Arquitectura
+This document outlines the plan for restructuring and improving the e-commerce application. The goal is to create a modern, well-structured, and visually appealing user experience.
 
--   **Plataforma de Desarrollo:** Node.js
--   **Herramienta de Build:** Vite
--   **Lenguaje Principal:** TypeScript
--   **Framework Frontend:** React 19+ (con React Compiler y Actions)
--   **Estilos:** Tailwind CSS
--   **Componentes UI:** ShadCN UI
--   **Backend y Servicios:** Firebase (Authentication)
--   **Arquitectura:** Single-Page Application (SPA) del lado del cliente.
--   **Enrutamiento:** React Router DOM
--   **Internacionalización (i18n):** Solución manual con Context API y archivos JSON.
+## Plan
 
----
-
-## Plan de Implementación Actual
-
-### Fase 1: Configuración del Proyecto y Estructura Base
-
-1.  **Inicializar Blueprint:** Crear `blueprint.md` para documentar el proyecto.
-2.  **Migrar a TypeScript:**
-    *   Renombrar archivos `.jsx` a `.tsx`.
-    *   Instalar dependencias de TypeScript (`typescript`, `@types/react`, `@types/react-dom`).
-    *   Crear y configurar el archivo `tsconfig.json`.
-3.  **Instalar y Configurar Estilos:**
-    *   Instalar Tailwind CSS y sus dependencias (`tailwindcss`, `postcss`, `autoprefixer`).
-    *   Inicializar Tailwind CSS creando `tailwind.config.js` y `postcss.config.js`.
-    *   Configurar las rutas de contenido en `tailwind.config.js`.
-4.  **Instalar y Configurar ShadCN UI:**
-    *   Ejecutar el comando `npx shadcn-ui@latest init` para inicializar ShadCN.
-    *   Esto configurará `tailwind.config.js`, creará `src/lib/utils.ts` y el directorio `src/components/ui`.
-5.  **Instalar Dependencias Adicionales:**
-    *   `react-router-dom` para el enrutamiento.
-    *   `firebase` para los servicios de backend.
-    *   `lucide-react` para iconos.
-6.  **Crear Estructura de Carpetas:**
-    *   Establecer la estructura de directorios principal (`src/app`, `src/components`, `src/context`, `src/lib`, `src/locales`).
-7.  **Limpieza Inicial:** Actualizar `App.tsx` y `main.tsx` para reflejar la nueva estructura y eliminar el código de demostración inicial.
+1.  **Restructure the application:** Create a `pages` directory for different views (Home, Login, Register, Profile) and a `components` directory for reusable UI elements.
+2.  **Implement routing:** Use `react-router-dom` to set up routes for each page.
+3.  **Add styling:** Use CSS modules and global styles to create a modern UI.
+4.  **Create a consistent layout:** Create a main layout component with a header and footer.
+5.  **Design the product cards:** Create a visually appealing product card component.
+6.  **Implement user authentication:** Create login and registration forms.
+7.  **Create a profile page:** Create a profile page for users.
+8.  **Add a protected route:** Create a protected route component for authenticated users.
+9.  **Refactor the main App component:** Update `App.tsx` to include the router and layout.
+10. **Create a `services` directory:** House the authentication service.
+11. **Create a `context` directory:** House the authentication context.
+12. **Create a `firebase` directory:** House the Firebase configuration.
+13. **Create a `lib` directory:** House utility functions.
+14. **Create a `styles` directory:** For global styles.
+15. **Create a `hooks` directory:** For custom hooks.
+16. **Update `main.tsx`:** Render the App component.
+17. **Update `index.html`:** Set the title and import the main script.
+18. **Update `vite.config.ts`:** Add a path alias for the `src` directory.
+19. **Update `tsconfig.json`:** Add the path alias.
+20. **Update `package.json`:** Add new dependencies.
+21. **Update `postcss.config.js`:** Update the configuration.
+22. **Update `tailwind.config.js`:** Update the configuration.
+23. **Update `eslint.config.js`:** Update the configuration.
+24. **Update `App.css`:** Update the styles.
+25. **Update `index.css`:** Update the styles.
+26. **Update `components.json`:** Update the configuration.
+27. **Add placeholder images:** Add images to the `public` directory.
+28. **Delete unnecessary files:** Remove unused files.
