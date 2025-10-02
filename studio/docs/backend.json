@@ -1,0 +1,155 @@
+{
+  "entities": {
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents a product in the e-commerce store.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the product."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the product."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category the product belongs to."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the product."
+        },
+        "stock": {
+          "type": "number",
+          "description": "Number of units currently in stock."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the product."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the product image.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "category",
+        "price",
+        "stock",
+        "description",
+        "imageUrl"
+      ]
+    },
+    "CartItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CartItem",
+      "type": "object",
+      "description": "Represents an item in the user's shopping cart.",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "description": "Reference to Product. (Relationship: CartItem N:1 Product)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity of the product in the cart."
+        }
+      },
+      "required": [
+        "productId",
+        "quantity"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the e-commerce application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the user."
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "name"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Stores product information.  No authorization dependencies.",
+          "params": [
+            {
+              "name": "productId",
+              "description": "The unique identifier of the product."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user information. Used primarily to house user-specific data.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user.  Matches the Firebase Auth UID."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/cart",
+        "definition": {
+          "entityName": "CartItem",
+          "schema": {
+            "$ref": "#/backend/entities/CartItem"
+          },
+          "description": "Stores the user's cart. Path-based ownership ensures only the user can access their cart.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user. Matches the Firebase Auth UID."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support an e-commerce application with products and shopping carts. It leverages path-based ownership for user-specific data (carts) and a flat product collection for easy listing and filtering. Authentication is handled anonymously as requested, with future-proofing for password authentication.\n\n**Authorization Independence:** The structure avoids hierarchical authorization. Each product is independent of any parent document, and user carts are isolated under their user ID.\n\n**QAPs:**\n*   Secure List Operations for Products: The flat `products` collection allows listing all products without complex filtering in rules.\n*   User-Specific Cart Data: Using `/users/{userId}/cart` ensures that users can only access their own cart data, thus facilitating a secure list operation for cart items.\n\nThe structure is designed for debuggability through clear path-based ownership and explicit naming."
+  }
+}
